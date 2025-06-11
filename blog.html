@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>King's Farm and Foods - Blog</title>
+    <link rel="preload" href="blog-hero.webp" as="image">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #F5F7F5;
+            --bg-secondary: #E8F0E8;
+            --accent-primary: #228B22;
+            --accent-secondary: #32CD32;
+            --cosmic-gold: #D4AF37;
+            --text-primary: #1A1A1A;
+            --text-secondary: #4A4A4A;
+            --success: #00FF7F;
+            --error: #FF4040;
+            --footer-bg: #E8F0E8;
+        }
+        .dark-mode {
+            --bg-primary: #1A1A1A;
+            --bg-secondary: #2C2C2C;
+            --accent-primary: #228B22;
+            --accent-secondary: #32CD32;
+            --cosmic-gold: #D4AF37;
+            --text-primary: #FFFFFF;
+            --text-secondary: #D3D3D3;
+            --success: #00FF7F;
+            --error: #FF4040;
+            --footer-bg: #2C2C2C;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            position: relative;
+            overflow-x: hidden;
+        }
+        #particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #1A1A1A, #2C2C2C);
+        }
+        .content-wrapper {
+            transition: filter 0.3s ease;
+        }
+        .content-wrapper.nav-open {
+            filter: blur(3px);
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(245, 247, 245, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        header.shrink { transform: scale(0.98); }
+        .top-bar {
+            background: var(--accent-primary);
+            color: #FFFFFF;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px var(--accent-primary), 0 0 10px var(--accent-primary);
+        }
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px var(--accent-primary);
+        }
+        .search-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .search-bar {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+        .search-bar input {
+            width: 100%;
+            padding: 0.5rem 2rem 0.5rem 1rem;
+            border: 1px solid var(--accent-secondary);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        .search-bar input:focus {
+            box-shadow: 0 0 10px var(--accent-primary);
+            outline: none;
+        }
+        .search-bar::after {
+            content: '🔍';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+        nav { display: flex; gap: 1.5rem; position: relative; }
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.2rem 0;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        @media (min-width: 769px) {
+            nav a::before {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: linear-gradient(90deg, var(--accent-primary), var(--cosmic-gold));
+                transition: width 0.4s ease;
+            }
+            nav a:hover::before {
+                width: 100%;
+            }
+            nav a:hover {
+                color: var(--cosmic-gold);
+                text-shadow: 0 0 10px var(--cosmic-gold);
+            }
+            nav a::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 0;
+                width: 0;
+                height: 100%;
+                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle cx="5" cy="5" r="2" fill="%23D4AF37" opacity="0.5"/></svg>') repeat-x;
+                background-size: 10px;
+                opacity: 0;
+                transition: width 0.4s ease, opacity 0.2s ease;
+                pointer-events: none;
+            }
+            nav a:hover::after {
+                width: 100%;
+                opacity: 1;
+                animation: particleTrail 1s infinite;
+            }
+        }
+        @keyframes particleTrail {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 0; }
+        }
+        .header-icons { display: flex; gap: 1rem; align-items: center; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.2rem; color: var(--text-primary); }
+        .cart-icon:hover { color: var(--cosmic-gold); text-shadow: 0 0 10px var(--cosmic-gold); }
+        #cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent-primary);
+            color: #FFFFFF;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+            box-shadow: 0 0 5px var(--accent-primary);
+        }
+        #dark-mode-toggle { cursor: pointer; font-size: 1.2rem; color: var(--text-primary); }
+        #dark-mode-toggle:hover { color: var(--cosmic-gold); text-shadow: 0 0 10px var(--cosmic-gold); }
+        .hamburger { display: none; font-size: 1.5rem; cursor: pointer; color: var(--text-primary); }
+        .hamburger:hover { color: var(--cosmic-gold); text-shadow: 0 0 10px var(--cosmic-gold); }
+        .nav-header { display: none; }
+        .hero {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+            text-align: center;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            margin-top: 120px;
+        }
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: left 0.5s ease, opacity 0.5s ease;
+        }
+        .hero-slide.active {
+            left: 0;
+            opacity: 1;
+        }
+        .hero-slide picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: zoomIn 1.5s ease-in-out;
+            transition: transform 0.3s ease;
+        }
+        @keyframes zoomIn {
+            0% { transform: scale(1.2); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #FFFFFF;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 600px;
+        }
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            animation: heartbeat 2s infinite;
+            text-shadow: 0 0 20px var(--cosmic-gold);
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            animation: slideInRight 1s ease-in-out 0.3s;
+            animation-fill-mode: both;
+        }
+        .hero-content button {
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 0 0 20px var(--cosmic-gold);
+            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+            animation: bounceIn 1s ease-in-out 0.6s;
+            animation-fill-mode: both;
+        }
+        .hero-content button:hover {
+            background: linear-gradient(45deg, var(--cosmic-gold), var(--accent-primary));
+            box-shadow: 0 0 30px var(--cosmic-gold);
+            transform: scale(1.05);
+        }
+        @keyframes slideInRight {
+            0% { transform: translateX(100%); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        main { padding: 2rem; }
+        .section {
+            position: relative;
+            margin: 3rem 0;
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(34, 139, 34, 0.1), rgba(255, 215, 0, 0.1));
+            opacity: 0.5;
+            z-index: -1;
+            animation: auroraShift 10s infinite;
+        }
+        @keyframes auroraShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .blog {
+            text-align: center;
+        }
+        .blog h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            text-shadow: 0 0 10px var(--cosmic-gold);
+            margin-bottom: 1rem;
+        }
+        .blog p {
+            animation: fadeIn 1s ease-in;
+            text-align: center;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .blog-filter {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .blog-filter button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--cosmic-gold);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .blog-filter button.active, .blog-filter button:hover {
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            box-shadow: 0 0 10px var(--cosmic-gold);
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .blog-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px var(--cosmic-gold);
+        }
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+            pointer-events: none;
+        }
+        .blog-card:hover::before {
+            opacity: 1;
+        }
+        .blog-card .image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        .blog-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        .blog-card:hover img {
+            transform: scale(1.05);
+        }
+        .blog-card h3 {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+            color: var(--accent-primary);
+            text-shadow: 0 0 5px var(--cosmic-gold);
+        }
+        .blog-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+        .blog-card .tags {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        .blog-card .tag {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--text-secondary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+        .blog-card button {
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin-top: 0.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--cosmic-gold);
+            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .blog-card button:hover {
+            background: linear-gradient(45deg, var(--cosmic-gold), var(--accent-primary));
+            box-shadow: 0 0 20px var(--cosmic-gold);
+            transform: scale(1.05);
+        }
+        #cart-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border: 2px solid var(--cosmic-gold);
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 30px var(--cosmic-gold);
+            z-index: 2000;
+            animation: shimmer 2s infinite;
+        }
+        @keyframes shimmer {
+            0% { box-shadow: 0 0 30px var(--cosmic-gold); }
+            50% { box-shadow: 0 0 50px var(--cosmic-gold); }
+            100% { box-shadow: 0 0 30px var(--cosmic-gold); }
+        }
+        #cart-modal h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--cosmic-gold);
+            text-shadow: 0 0 10px var(--cosmic-gold);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        #cart-modal ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        #cart-modal li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        #cart-modal li span {
+            flex: 1;
+            font-weight: 500;
+        }
+        #cart-modal li .quantity-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+        #cart-modal li button {
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--cosmic-gold);
+            font-size: 0.9rem;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        #cart-modal li button:hover {
+            background: linear-gradient(45deg, var(--cosmic-gold), var(--accent-primary));
+            box-shadow: 0 0 20px var(--cosmic-gold);
+            transform: scale(1.05);
+        }
+        #cart-modal li button.remove {
+            background: var(--error);
+            box-shadow: 0 0 5px var(--error);
+        }
+        #cart-modal li button.remove:hover {
+            background: #FF6666;
+            box-shadow: 0 0 10px #FF6666;
+        }
+        #cart-modal p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--cosmic-gold);
+            text-shadow: 0 0 5px var(--cosmic-gold);
+        }
+        #cart-modal .cart-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        #cart-modal button {
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--cosmic-gold);
+            font-size: 1rem;
+        }
+        #checkout-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border: 2px solid var(--cosmic-gold);
+            border-radius: 15px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 0 30px var(--cosmic-gold);
+            z-index: 2000;
+            animation: shimmer 2s infinite;
+        }
+        #checkout-modal h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--cosmic-gold);
+            text-shadow: 0 0 10px var(--cosmic-gold);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        #order-summary {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        #order-summary h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+        #order-summary ul {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+        #order-summary li {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        #order-summary p {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--cosmic-gold);
+        }
+        .bank-details {
+            margin-bottom: 2rem;
+        }
+        .bank-details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+        .bank-details .bank-card {
+            background: rgba(255,255,255,0.15);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .bank-details .bank-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--cosmic-gold);
+        }
+        .bank-details p {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
+        .bank-details .copy-btn {
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            border: none;
+            padding: 0.4rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+        .bank-details .copy-btn:hover {
+            background: linear-gradient(45deg, var(--cosmic-gold), var(--accent-primary));
+            box-shadow: 0 0 10px var(--cosmic-gold);
+        }
+        .bank-details .copy-btn.copied {
+            background: var(--success);
+            box-shadow: 0 0 10px var(--success);
+        }
+        .checkout-form .file-upload {
+            position: relative;
+            padding: 1rem;
+            border: 2px dashed var(--cosmic-gold);
+            border-radius: 10px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            transition: background 0.3s;
+        }
+        .checkout-form .file-upload:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .checkout-form .file-upload input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .checkout-form .file-upload label {
+            font-size: 1rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+        .checkout-form .file-upload i {
+            font-size: 1.5rem;
+            color: var(--cosmic-gold);
+            margin-bottom: 0.5rem;
+        }
+        .checkout-form button {
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--cosmic-gold);
+            font-size: 1rem;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .checkout-form button:hover {
+            background: linear-gradient(45deg, var(--cosmic-gold), var(--accent-primary));
+            box-shadow: 0 0 20px var(--cosmic-gold);
+            transform: scale(1.05);
+        }
+        #checkout-message {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        #blog-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border: 2px solid var(--cosmic-gold);
+            border-radius: 15px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 0 30px var(--cosmic-gold);
+            z-index: 2000;
+            animation: shimmer 2s infinite;
+        }
+        #blog-modal h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--cosmic-gold);
+            text-shadow: 0 0 10px var(--cosmic-gold);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        #blog-modal img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        #blog-modal .blog-details {
+            color: var(--text-primary);
+        }
+        #blog-modal .blog-details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--accent-primary);
+            margin: 1rem 0 0.5rem;
+        }
+        #blog-modal .blog-details p {
+            margin-bottom: 1rem;
+        }
+        #blog-modal .close-blog {
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--cosmic-gold);
+            font-size: 1rem;
+            display: block;
+            margin: 1rem auto 0;
+            transition: background 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        #blog-modal .close-blog:hover {
+            background: linear-gradient(45deg, var(--cosmic-gold), var(--accent-primary));
+            box-shadow: 0 0 20px var(--cosmic-gold);
+            transform: scale(1.05);
+        }
+        #cart-notification, #copy-notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--success);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--success);
+            z-index: 2000;
+        }
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--cosmic-gold);
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        footer {
+            background: var(--footer-bg);
+            padding: 3rem 1rem;
+            position: relative;
+            border-top: 5px solid var(--cosmic-gold);
+            margin-top: 3rem;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.2);
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent-secondary), var(--cosmic-gold));
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            color: var(--text-primary);
+            background: rgba(255,255,255,0.3);
+            backdrop-filter: blur(5px);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,255,255,0.1);
+        }
+        footer h3 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: linear-gradient(to right, var(--accent-primary), var(--cosmic-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 5px rgba(0,255,0,0.2);
+        }
+        footer p, footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 0.5rem 0;
+            transition: all 0.3s;
+        }
+        a:not(nav a):hover {
+            background: linear-gradient(to right, var(--accent-primary), var(--cosmic-gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px var(--cosmic-gold);
+            transform: scale(1.05);
+        }
+        footer p i { margin-right: 0.5rem; color: var(--accent-primary); }
+        footer form { display: flex; flex-direction: column; gap: 0.5rem; }
+        footer input {
+            padding: 0.5rem;
+            border: 1px solid var(--cosmic-gold);
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-primary);
+            transition: box-shadow 0.3s;
+        }
+        footer input:focus {
+            box-shadow: 0 0 10px var(--cosmic-gold);
+            outline: none;
+        }
+        footer button {
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            box-shadow: 0 0 10px var(--cosmic-gold);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        footer button:hover {
+            background: linear-gradient(45deg, var(--cosmic-gold), var(--accent-primary));
+            box-shadow: 0 0 20px var(--cosmic-gold);
+        }
+        .social-icons { display: flex; gap: 1rem; }
+        .social-icons a {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            transition: transform 0.3s, color 0.3s, text-shadow 0.3s;
+        }
+        .social-icons a:hover {
+            color: var(--cosmic-gold);
+            transform: scale(1.2);
+            text-shadow: 0 0 10px var(--cosmic-gold);
+        }
+        .back-to-top {
+            text-align: center;
+            margin-top: 2rem;
+        }
+        .back-to-top a {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(45deg, var(--accent-primary), var(--cosmic-gold));
+            color: #FFFFFF;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            box-shadow: 0 0 10px var(--cosmic-gold);
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        .back-to-top a:hover {
+            background: linear-gradient(45deg, var(--cosmic-gold), var(--accent-primary));
+            box-shadow: 0 0 20px var(--cosmic-gold);
+        }
+        @media (max-width: 1200px) {
+            .main-header { padding: 1rem 1.5rem; }
+            .logo { font-size: 2rem; }
+            .search-bar { max-width: 350px; }
+            .hero { height: 500px; margin-top: 110px; }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .hero-content button { padding: 0.9rem 1.8rem; font-size: 1.1rem; }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+        }
+        @media (max-width: 1024px) {
+            .main-header { padding: 1rem; }
+            .logo { font-size: 1.8rem; }
+            .search-bar { max-width: 300px; }
+            .hero { height: 400px; margin-top: 100px; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1rem; }
+            .hero-content button { padding: 0.8rem 1.5rem; font-size: 1rem; }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+        }
+        @media (max-width: 768px) {
+            .main-header { flex-wrap: wrap; gap: 1rem; padding: 0.5rem 1rem; }
+            .logo { font-size: 1.5rem; }
+            .search-nav { width: 100%; justify-content: space-between; gap: 0.5rem; }
+            .search-bar { max-width: 100%; flex: 1; }
+            .search-bar input { padding: 0.4rem 1rem; font-size: 0.9rem; }
+            nav {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: -70%;
+                width: 70%;
+                height: 100vh;
+                background: linear-gradient(135deg, var(--accent-primary), var(--cosmic-gold));
+                padding: 2rem 1rem;
+                box-shadow: 2px 0 15px rgba(0,0,0,0.3);
+                transition: left 0.3s ease;
+                z-index: 1001;
+                overflow-y: auto;
+            }
+            nav.active { display: block; left: 0; }
+            .nav-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+            nav .nav-header h3 { font-size: 1.5rem; font-weight: 700; color: #FFFFFF; text-shadow: 0 0 10px var(--cosmic-gold); }
+            nav .close-nav { font-size: 1.5rem; color: #FFFFFF; cursor: pointer; transition: transform 0.3s, text-shadow 0.3s; }
+            nav .close-nav:hover { transform: rotate(90deg); text-shadow: 0 0 10px var(--cosmic-gold); }
+            nav a {
+                display: block;
+                margin: 1.5rem 0;
+                font-size: 1.2rem;
+                color: #FFFFFF;
+                text-shadow: 0 0 5px var(--cosmic-gold);
+                padding: 0.5rem 1rem;
+                border-radius: 5px;
+                background: rgba(0,0,0,0.3);
+                transition: transform 0.3s, background 0.3s, text-shadow 0.3s;
+                opacity: 0;
+                transform: translateX(-20px);
+                animation: slideInNav 0.3s ease forwards;
+                animation-delay: calc(0.1s * var(--nav-index));
+            }
+            nav a:hover { background: rgba(255,255,255,0.2); transform: translateX(10px); text-shadow: 0 0 15px var(--cosmic-gold); }
+            @keyframes slideInNav { to { opacity: 1; transform: translateX(0); } }
+            .hamburger { display: block; }
+            .header-icons { gap: 0.5rem; }
+            .cart-icon, #dark-mode-toggle { font-size: 1rem; }
+            #cart-count { font-size: 0.6rem; padding: 1px 4px; }
+            .hero { height: 300px; margin-top: 220px; }
+            .hero-content h1 { font-size: 1.8rem; }
+            .hero-content p { font-size: 0.9rem; }
+            .hero-content button { padding: 0.6rem 1.2rem; font-size: 0.9rem; }
+            main { padding: 1rem; }
+            .section { padding: 1.5rem; margin: 1.5rem 0; }
+            .blog h2 { font-size: 1.5rem; }
+            .blog p { font-size: 0.9rem; }
+            .blog-filter { gap: 0.5rem; }
+            .blog-filter button { font-size: 0.8rem; padding: 0.4rem 0.8rem; }
+            .blog-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+            .blog-card { padding: 0.8rem; }
+            .blog-card h3 { font-size: 1rem; }
+            .blog-card p { font-size: 0.8rem; }
+            .blog-card .tag { font-size: 0.7rem; }
+            .blog-card button { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+            #cart-modal, #checkout-modal, #blog-modal {
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                transform: none;
+                border: none;
+                padding: 1.5rem;
+                border-radius: 0;
+            }
+            #cart-modal h2, #checkout-modal h2, #blog-modal h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+            #cart-modal li {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            #cart-modal li span { margin-bottom: 0.5rem; }
+            #cart-modal li .quantity-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            #cart-modal li button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            #cart-modal p { font-size: 1rem; }
+            #cart-modal .cart-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            #cart-modal button {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            #checkout-modal .bank-details .bank-card {
+                padding: 0.8rem;
+            }
+            #checkout-modal .bank-details .copy-btn {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            .checkout-form .file-upload {
+                padding: 0.8rem;
+            }
+            .checkout-form .file-upload label { font-size: 0.9rem; }
+            .checkout-form .file-upload i { font-size: 1.2rem; }
+            #blog-modal img { max-height: 200px; }
+            #blog-modal .blog-details h3 { font-size: 1.2rem; }
+            footer { padding: 2rem 1rem; }
+            .footer-content { padding: 1rem; gap: 1rem; }
+            footer h3 { font-size: 1.1rem; }
+            footer p, footer a { font-size: 0.9rem; }
+            .social-icons a { font-size: 1.5rem; }
+            .back-to-top a { padding: 0.4rem 0.8rem; font-size: 0.9rem; }
+        }
+        @media (max-width: 480px) {
+            .main-header { padding: 0.5rem; }
+            .logo { font-size: 1.2rem; }
+            .search-bar input { font-size: 0.8rem; padding: 0.3rem 1rem; }
+            .hamburger { font-size: 1.2rem; }
+            .header-icons { gap: 0.3rem; }
+            .cart-icon, #dark-mode-toggle { font-size: 0.9rem; }
+            #cart-count { font-size: 0.5rem; padding: 1px 3px; }
+            .hero { height: 250px; margin-top: 200px; }
+            .hero-content h1 { font-size: 1.5rem; }
+            .hero-content p { font-size: 0.8rem; }
+            .hero-content button { padding: 0.5rem 1rem; font-size: 0.8rem; }
+            main { padding: 0.5rem; }
+            .section { padding: 1rem; margin: 1rem 0; }
+            .blog h2 { font-size: 1.2rem; }
+            .blog p { font-size: 0.8rem; }
+            .blog-filter button { font-size: 0.7rem; padding: 0.3rem 0.6rem; }
+            .blog-grid { grid-template-columns: 1fr; gap: 0.8rem; }
+            .blog-card { padding: 0.5rem; }
+            .blog-card h3 { font-size: 0.9rem; }
+            .blog-card p { font-size: 0.7rem; }
+            .blog-card .tag { font-size: 0.6rem; }
+            .blog-card button { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+            #cart-modal h2, #checkout-modal h2, #blog-modal h2 { font-size: 1.2rem; }
+            #cart-modal li { padding: 0.8rem; font-size: 0.85rem; }
+            #cart-modal li button { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+            #checkout-modal .bank-details .bank-card { padding: 0.5rem; }
+            #checkout-modal .bank-details .copy-btn { padding: 0.2rem 0.5rem; font-size: 0.7rem; }
+            .checkout-form .file-upload { padding: 0.5rem; }
+            .checkout-form .file-upload label { font-size: 0.8rem; }
+            .checkout-form .file-upload i { font-size: 1rem; }
+            footer { padding: 1.5rem 0.5rem; }
+            .footer-content { padding: 0.5rem; gap: 0.5rem; }
+            footer h3 { font-size: 1rem; }
+            footer p, footer a { font-size: 0.8rem; }
+            .social-icons a { font-size: 1.2rem; }
+            .back-to-top a { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+    <div id="cart-notification"></div>
+    <div id="copy-notification"></div>
+    <header>
+        <div class="top-bar">🌾 Free Delivery on Orders Over $45! 🌾</div>
+        <div class="main-header">
+            <div class="logo">King's Farm and Foods</div>
+            <div class="search-nav">
+                <div class="search-bar">
+                    <input type="text" id="blog-search" placeholder="Search for blog posts...">
+                </div>
+                <span class="hamburger">☰</span>
+                <nav>
+                    <div class="nav-header">
+                        <h3>King's Farm and Foods</h3>
+                        <span class="close-nav">✖</span>
+                    </div>
+                    <a href="index.html" style="--nav-index: 1;">Home</a>
+                    <a href="about.html" style="--nav-index: 2;">About Us</a>
+                    <a href="shop.html" style="--nav-index: 3;">Shop</a>
+                    <a href="recipes.html" style="--nav-index: 4;">Recipes</a>
+                    <a href="care-tips.html" style="--nav-index: 5;">Care & Tips</a>
+                    <a href="blog.html" style="--nav-index: 6;">Blog</a>
+                    <a href="contact.html" style="--nav-index: 7;">Contact</a>
+                </nav>
+            </div>
+            <div class="header-icons">
+                <div class="cart-icon">🛒 <span id="cart-count">0</span></div>
+                <span id="dark-mode-toggle">🌙</span>
+            </div>
+        </div>
+    </header>
+    <div class="content-wrapper">
+        <main>
+            <section class="hero" id="blog-hero">
+                <div class="hero-carousel">
+                    <div class="hero-slide active">
+                        <picture>
+                            <source srcset="https://media.istockphoto.com/id/1168941078/photo/female-agronomist-with-tablet-computer-advising-corn-farmer-in-field.webp?a=1&b=1&s=612x612&w=0&k=20&c=96GqP8Pw7s0Hco3n2PrGGt3GhUXhMHl9Ux7kieiuTmQ=" type="image/jpg">
+                            <img src="https://media.istockphoto.com/id/1168941078/photo/female-agronomist-with-tablet-computer-advising-corn-farmer-in-field.webp?a=1&b=1&s=612x612&w=0&k=20&c=96GqP8Pw7s0Hco3n2PrGGt3GhUXhMHl9Ux7kieiuTmQ=" alt="Farming Tips" width="1200" height="500">
+                        </picture>
+                    </div>
+                    <div class="hero-slide">
+                        <picture>
+                            <source srcset="https://plus.unsplash.com/premium_photo-1673580742886-1129e6e1f829?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGVhbHRoeSUyMGVhdGluZ3xlbnwwfHwwfHx8MA%3D%3D" type="image/jpg">
+                            <img src="https://plus.unsplash.com/premium_photo-1673580742886-1129e6e1f829?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGVhbHRoeSUyMGVhdGluZ3xlbnwwfHwwfHx8MA%3D%3D" alt="Healthy Eating" loading="lazy" width="1200" height="500">
+                        </picture>
+                    </div>
+                    <div class="hero-slide">
+                        <picture>
+                            <source srcset="https://images.unsplash.com/photo-1566218246241-934ad8b38ea6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHN1c3RhaW5hYmxlJTIwZmFybWluZ3xlbnwwfHwwfHx8MA%3D%3D" type="image/jpg">
+                            <img src="https://images.unsplash.com/photo-1566218246241-934ad8b38ea6?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHN1c3RhaW5hYmxlJTIwZmFybWluZ3xlbnwwfHwwfHx8MA%3D%3D" alt="Sustainable Farming" loading="lazy" width="1200" height="500">
+                        </picture>
+                    </div>
+                </div>
+                <div class="hero-content">
+                    <h1>Our Farm Blog</h1>
+                    <p>Explore tips, stories, and insights from King's Farm and Foods.</p>
+                    <button onclick="scrollToBlog()">Read Our Posts</button>
+                </div>
+            </section>
+            <section class="blog section" id="blog-section">
+                <h2>Latest Blog Posts</h2>
+                <p>Stay updated with farming tips, recipes, and sustainable practices.</p>
+                <div class="blog-filter">
+                    <button data-type="all" class="active">All</button>
+                    <button data-type="farming">Farming Tips</button>
+                    <button data-type="recipes">Recipes</button>
+                    <button data-type="sustainability">Sustainability</button>
+                </div>
+                <div class="blog-grid" id="blog-grid">
+                    <div class="blog-card" data-type="farming" data-blog-id="organic-farming">
+                        <div class="image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1492496913980-501348b61469?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8b3JnYW5pYyUyMGZhcm1pbmd8ZW58MHx8MHx8fDA%3D" alt="Organic Farming" loading="lazy">
+                        </div>
+                        <h3>Benefits of Organic Farming</h3>
+                        <div class="tags">
+                            <span class="tag">Farming</span>
+                            <span class="tag">Organic</span>
+                            <span class="tag">Health</span>
+                        </div>
+                        <p>Learn why organic farming is better for you and the planet.</p>
+                        <button onclick="showBlogDetails('organic-farming')">Read More</button>
+                    </div>
+                    <div class="blog-card" data-type="recipes" data-blog-id="farm-recipes">
+                        <div class="image-wrapper">
+                            <img src="https://images.unsplash.com/photo-1695837390040-ea8077f56205?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGZhcm0lMjByZWNpcGVlc3xlbnwwfHwwfHx8MA%3D%3D" alt="Farm Recipes" loading="lazy">
+                        </div>
+                        <h3>Easy Farm-to-Table Recipes</h3>
+                        <div class="tags">
+                            <span class="tag">Recipes</span>
+                            <span class="tag">Healthy</span>
+                            <span class="tag">Farm-Fresh</span>
+                        </div>
+                        <p>Quick and delicious meals using fresh farm produce.</p>
+                        <button onclick="showBlogDetails('farm-recipes')">Read More</button>
+                    </div>
+                    <div class="blog-card" data-type="sustainability" data-blog-id="sustainable-practices">
+                        <div class="image-wrapper">
+                            <img src="https://plus.unsplash.com/premium_photo-1663050704914-1277fcbfe5c3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHN1c3RhaW5hYmxlJTIwcHJhY3RpY2VzfGVufDB8fDB8fHww" alt="Sustainable Practices" loading="lazy">
+                        </div>
+                        <h3>Sustainable Farming Practices</h3>
+                        <div class="tags">
+                            <span class="tag">Sustainability</span>
+                            <span class="tag">Environment</span>
+                            <span class="tag">Farming</span>
+                        </div>
+                        <p>How we reduce our environmental impact at King's Farm.</p>
+                        <button onclick="showBlogDetails('sustainable-practices')">Read More</button>
+                    </div>
+                    <div class="blog-card" data-type="farming" data-blog-id="soil-health">
+                        <div class="image-wrapper">
+                            <img src="https://media.istockphoto.com/id/1360520451/photo/top-view-of-soil-in-hands-for-check-the-quality-of-the-soil-for-control-soil-quality-before.webp?a=1&b=1&s=612x612&w=0&k=20&c=TQzwUj4FkIikldE5Zl2RdVHP9ki0HeTDbh-nBlSg5FI=" alt="Soil Health" loading="lazy">
+                        </div>
+                        <h3>Improving Soil Health</h3>
+                        <div class="tags">
+                            <span class="tag">Farming</span>
+                            <span class="tag">Soil</span>
+                            <span class="tag">Organic</span>
+                        </div>
+                        <p>Tips for maintaining fertile and healthy soil.</p>
+                        <button onclick="showBlogDetails('soil-health')">Read More</button>
+                    </div>
+                </div>
+            </section>
+            <div id="cart-modal">
+                <h2>Your Cart</h2>
+                <ul id="cart-items"></ul>
+                <p id="cart-total">Total: ₦0.00</p>
+                <div class="cart-actions">
+                    <button onclick="showCheckout()">Proceed to Checkout</button>
+                    <button onclick="document.getElementById('cart-modal').style.display='none'">Close</button>
+                </div>
+            </div>
+            <div id="checkout-modal">
+                <h2>Complete Your Order</h2>
+                <div id="order-summary"></div>
+                <div class="bank-details">
+                    <h3>Make Payment to Any of These Accounts</h3>
+                    <div class="bank-card">
+                        <p><strong>Bank:</strong> First Bank</p>
+                        <p><strong>Account Number:</strong> 3199605670 <button class="copy-btn" data-text="3199605670">Copy</button></p>
+                        <p><strong>Name:</strong> Alade Omotayo David</p>
+                    </div>
+                    <div class="bank-card">
+                        <p><strong>Bank:</strong> Opay</p>
+                        <p><strong>Account Number:</strong> 9120800600 <button class="copy-btn" data-text="9120800600">Copy</button></p>
+                        <p><strong>Name:</strong> King’s Farm and Foods</p>
+                    </div>
+                    <div class="bank-card">
+                        <p><strong>Bank:</strong> UBA</p>
+                        <p><strong>Account Number:</strong> 2143009690 <button class="copy-btn" data-text="2143009690">Copy</button></p>
+                        <p><strong>Name:</strong> Alade Omotayo David</p>
+                    </div>
+                </div>
+                <form class="checkout-form" id="checkout-form" action="https://getform.io/f/brookxya" method="POST" enctype="multipart/form-data">
+                    <div class="file-upload">
+                        <i class="fas fa-upload"></i>
+                        <label for="proof">Upload Proof of Payment (Image or PDF)</label>
+                        <input type="file" id="proof" name="proof" accept="image/*,application/pdf" required>
+                    </div>
+                    <input type="hidden" name="cart_items" id="cart-items-input">
+                    <input type="hidden" name="total" id="cart-total-input">
+                    <input type="hidden" name="whatsapp_message" id="whatsapp-message-input">
+                    <button type="submit">Submit Proof</button>
+                    <button type="button" onclick="sendToWhatsApp()">Continue on WhatsApp</button>
+                    <button type="button" onclick="document.getElementById('checkout-modal').style.display='none'">Cancel</button>
+                    <div id="checkout-message"></div>
+                </form>
+            </div>
+            <div id="blog-modal">
+                <h2 id="blog-title"></h2>
+                <img id="blog-image" src="" alt="">
+                <div class="blog-details" id="blog-details"></div>
+                <button class="close-blog" onclick="document.getElementById('blog-modal').style.display='none'">Close</button>
+            </div>
+            <footer>
+                <div class="footer-content">
+                     <div>
+                    <h3>King's Farm and Foods</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> 12,Onyejekwe street,Talavic road,Itoki-Dalemo,Alakuko,Lagos State</p>
+                    <p><i class="fas fa-globe"></i> We ship across Nigeria!</p>
+                    <p><i class="fas fa-phone-alt"></i> +234 912 080 0600</p>
+                    <p><i class="fas fa-envelope"></i> kingsfarms18@gmail.com</p>
+                    <p><i class="fas fa-clock"></i> Mon-Fri: 8am-5pm, Sat: 9am-3pm (WAT)</p>
+                </div>
+                    <div>
+                        <h3>Quick Links</h3>
+                        <p><a href="#home">Home</a></p>
+                        <p><a href="#about">About</a></p>
+                        <p><a href="#shop">Shop</a></p>
+                        <p><a href="#contact">Contact</a></p>
+                        <p><a href="#blog">Blog</a></p>
+                    </div>
+                    <div>
+                        <h3>Explore More</h3>
+                        <p><a href="#">Farming Tips</a></p>
+                        <p><a href="#">Recipes</a></p>
+                        <p><a href="#">Customer Stories</a></p>
+                        <p><a href="#">Newsletter Signup</a></p>
+                    </div>
+                    <div>
+                        <h3>Follow Us</h3>
+                        <div class="social-icons">
+                            <a href="https://tiktok.com/@david_reign1" class="fab fa-tiktok"></a>
+                            <a href="https://twitter.com/kingsfarm_ng" class="fab fa-twitter"></a>
+                            <a href="https://facebook.com/kingsfarmsfoods" class="fab fa-facebook-f"></a>
+                            <a href="https://instagram.com/kingsfarm_ng" class="fab fa-instagram"></a>
+                            <a href="https://wa.me/+2349120800600" class="fab fa-whatsapp"></a>
+                        </div>
+                        <h3 style="margin-top: 1rem;">Newsletter</h3>
+                        <form id="newsletter-form" action="https://getform.io/f/brookxya" method="POST">
+                            <input type="email" name="email" placeholder="Your Email" required>
+                            <button type="submit">Join Our Community!</button>
+                            <div class="form-message"></div>
+                        </form>
+                    </div>
+                </div>
+                <div class="back-to-top">
+                    <a href="#">Back to Top ⬆️</a>
+                </div>
+            </footer>
+        </main>
+    </div>
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || { items: [] };
+        const blogPosts = {
+            'organic-farming': {
+                title: 'Benefits of Organic Farming',
+                image: 'https://images.unsplash.com/photo-1492496913980-501348b61469?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8b3JnYW5pYyUyMGZhcm1pbmd8ZW58MHx8MHx8fDA=',
+                content: `
+                    <h3>Why Organic Farming Matters</h3>
+                    <p>Organic farming promotes healthier soils, reduces chemical exposure, and supports biodiversity. At King's Farm, we prioritize organic methods to ensure our produce is both nutritious and sustainable.</p>
+                    <h3>Key Benefits</h3>
+                    <p>1. <strong>Environmental Protection:</strong> Reduces pollution and conserves water.</p>
+                    <p>2. <strong>Healthier Food:</strong> Free from synthetic pesticides and fertilizers.</p>
+                    <p>3. <strong>Better Taste:</strong> Many report organic produce tastes fresher.</p>
+                    <p>Join us in supporting organic farming for a healthier planet!</p>
+                `
+            },
+            'farm-recipes': {
+                title: 'Easy Farm-to-Table Recipes',
+                image: 'https://images.unsplash.com/photo-1695837390040-ea8077f56205?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGZhcm0lMjByZWNpcGVlc3xlbnwwfHwwfHx8MA==',
+                content: `
+                    <h3>Fresh from the Farm</h3>
+                    <p>Our farm-fresh produce makes cooking simple and delicious. Here are two quick recipes to try:</p>
+                    <p><strong>Tomato Basil Salad:</strong> Combine sliced tomatoes, fresh basil, olive oil, and a pinch of salt.</p>
+                    <p><strong>Grilled Zucchini:</strong> Slice zucchini, brush with olive oil, season, and grill for 3-4 minutes per side.</p>
+                    <p>Visit our recipes page for more ideas!</p>
+                `
+            },
+            'sustainable-practices': {
+                title: 'Sustainable Farming Practices',
+                image: 'https://plus.unsplash.com/premium_photo-1663050704914-1277fcbfe5c3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHN1c3RhaW5hYmxlJTIwcHJhY3RpY2VzfGVufDB8fDB8fHww',
+                content: `
+                    <h3>Our Commitment to Sustainability</h3>
+                    <p>At King's Farm, we use crop rotation, composting, and water-efficient irrigation to minimize our environmental impact.</p>
+                    <h3>Our Practices</h3>
+                    <p>1. <strong>Crop Rotation:</strong> Enhances soil fertility.</p>
+                    <p>2. <strong>Composting:</strong> Reduces waste and enriches soil.</p>
+                    <p>3. <strong>Water Conservation:</strong> Drip irrigation saves water.</p>
+                    <p>Learn how you can support sustainable agriculture!</p>
+                `
+            },
+            'soil-health': {
+                title: 'Improving Soil Health',
+                image: 'https://media.istockphoto.com/id/1360520451/photo/top-view-of-soil-in-hands-for-check-the-quality-of-the-soil-for-control-soil-quality-before.webp?a=1&b=1&s=612x612&w=0&k=20&c=TQzwUj4FkIikldE5Zl2RdVHP9ki0HeTDbh-nBlSg5FI=',
+                content: `
+                    <h3>The Foundation of Farming</h3>
+                    <p>Healthy soil is key to productive farming. We share tips to improve soil health naturally.</p>
+                    <h3>Top Tips</h3>
+                    <p>1. <strong>Add Organic Matter:</strong> Compost and manure boost nutrients.</p>
+                    <p>2. <strong>Cover Crops:</strong> Prevent erosion and enrich soil.</p>
+                    <p>3. <strong>Minimize Tillage:</strong> Preserve soil structure.</p>
+                    <p>Healthy soil means healthier crops and a healthier you!</p>
+                `
+            }
+        };
+
+        function showBlogDetails(blogId) {
+            const blog = blogPosts[blogId];
+            if (!blog) return;
+            const modal = document.getElementById('blog-modal');
+            const title = document.getElementById('blog-title');
+            const image = document.getElementById('blog-image');
+            const details = document.getElementById('blog-details');
+            title.textContent = blog.title;
+            image.src = blog.image;
+            image.alt = blog.title;
+            details.innerHTML = blog.content;
+            modal.style.display = 'block';
+        }
+
+        function copyToClipboard(text, button) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showCopyNotification();
+                    button.classList.add('copied');
+                    button.textContent = 'Copied!';
+                    setTimeout(() => {
+                        button.classList.remove('copied');
+                        button.textContent = 'Copy';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Clipboard API failed:', err);
+                    fallbackCopy(text, button);
+                });
+            } else {
+                fallbackCopy(text, button);
+            }
+        }
+
+        function fallbackCopy(text, button) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showCopyNotification();
+                button.classList.add('copied');
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    button.textContent = 'Copy';
+                }, 2000);
+            } catch (err) {
+                console.error('Fallback copy failed:', err);
+                alert('Failed to copy. Please copy manually: ' + text);
+            } finally {
+                document.body.removeChild(textarea);
+            }
+        }
+
+        function showCopyNotification() {
+            const notification = document.getElementById('copy-notification');
+            notification.textContent = 'Account number copied!';
+            notification.style.display = 'block';
+            setTimeout(() => notification.style.display = 'none', 2000);
+        }
+
+        function addToCart(id, name, price) {
+            const parsedPrice = parseFloat(price);
+            let item = cart.items.find(i => i.id === id);
+            if (item) {
+                item.quantity += 1;
+            } else {
+                cart.items.push({ id, name, price: parsedPrice, quantity: 1 });
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+            const notification = document.getElementById('cart-notification');
+            notification.textContent = `${name} added to cart!`;
+            notification.style.display = 'block';
+            setTimeout(() => notification.style.display = 'none', 2000);
+            document.getElementById('cart-modal').style.display = 'block';
+        }
+
+        function updateCartDisplay() {
+            let modal = document.getElementById('cart-modal');
+            let cartCount = document.querySelector('#cart-count');
+            modal.innerHTML = `
+                <h2>Your Cart</h2>
+                <ul id="cart-items">
+                    ${cart.items.length === 0 ? '<li style="text-align: center; font-style: italic;">Your cart is empty.</li>' : 
+                    cart.items.map(item => `
+                        <li>
+                            <span>${item.name} - ₦${item.price.toFixed(2)} x ${item.quantity}</span>
+                            <div class="quantity-controls">
+                                <button onclick="updateQuantity('${item.id}', -1)">-</button>
+                                <span>${item.quantity}</span>
+                                <button onclick="updateQuantity('${item.id}', 1)">+</button>
+                                <button class="remove" onclick="removeItem('${item.id}')">Remove</button>
+                            </div>
+                        </li>
+                    `).join('')}
+                </ul>
+                <p id="cart-total">Total: ₦${cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2)}</p>
+                <div class="cart-actions">
+                    <button onclick="showCheckout()">Proceed to Checkout</button>
+                    <button onclick="document.getElementById('cart-modal').style.display='none'">Close</button>
+                </div>
+            `;
+            cartCount.textContent = cart.items.reduce((sum, item) => sum + item.quantity, 0);
+        }
+
+        function updateQuantity(id, change) {
+            let item = cart.items.find(i => i.id === id);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart.items = cart.items.filter(i => i.id !== id);
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartDisplay();
+                document.getElementById('cart-modal').style.display = 'block';
+            }
+        }
+
+        function removeItem(id) {
+            cart.items = cart.items.filter(i => i.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartDisplay();
+            document.getElementById('cart-modal').style.display = 'block';
+        }
+
+        function showCheckout() {
+            if (cart.items.length === 0) {
+                alert('Your cart is empty! Add some items before checking out.');
+                return;
+            }
+            document.getElementById('cart-modal').style.display = 'none';
+            const checkoutModal = document.getElementById('checkout-modal');
+            const orderSummary = document.getElementById('order-summary');
+            orderSummary.innerHTML = `
+                <h3>Order Summary</h3>
+                <ul>
+                    ${cart.items.map(item => `
+                        <li>${item.name} x ${item.quantity} - ₦${(item.price * item.quantity).toFixed(2)}</li>
+                    `).join('')}
+                </ul>
+                <p><strong>Total:</strong> ₦${cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2)}</p>
+            `;
+            checkoutModal.style.display = 'block';
+        }
+
+        function sendToWhatsApp() {
+            const total = cart.items.reduce((sum, i) => sum + i.price * i.quantity, 0).toFixed(2);
+            const message = `Order Details:\n${cart.items.map(item => `${item.name} - ${item.quantity} x ₦${item.price.toFixed(2)}`).join('\n')}\nTotal: ₦${total}\nPlease provide delivery details.`;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappNumber = '+2349120800600';
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodedMessage}`;
+            
+            document.getElementById('whatsapp-message-input').value = message;
+            window.open(whatsappUrl, '_blank');
+            
+            const checkoutMessage = document.getElementById('checkout-message');
+            checkoutMessage.innerHTML = '<p style="color: var(--success);">Order sent to WhatsApp! Please provide delivery details there.</p>';
+        }
+
+        function scrollToBlog() {
+            document.getElementById('blog-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartDisplay();
+
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const text = button.dataset.text;
+                    copyToClipboard(text, button);
+                });
+            });
+
+            document.querySelector('.cart-icon').addEventListener('click', () => {
+                document.getElementById('cart-modal').style.display = 'block';
+            });
+
+            document.querySelector('.hamburger').addEventListener('click', () => {
+                document.querySelector('nav').classList.add('active');
+                document.querySelector('.content-wrapper').classList.add('nav-open');
+            });
+
+            document.querySelector('.close-nav').addEventListener('click', () => {
+                document.querySelector('nav').classList.remove('active');
+                document.querySelector('.content-wrapper').classList.remove('nav-open');
+            });
+
+            document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const icon = document.getElementById('dark-mode-toggle');
+                icon.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+            });
+
+            const slides = document.querySelectorAll('.hero-slide');
+            let currentSlide = 0;
+            function showSlide(index) {
+                slides.forEach((slide, i) => {
+                    slide.classList.toggle('active', i === index);
+                });
+            }
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 5000);
+
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            sections.forEach(section => observer.observe(section));
+
+            const filterButtons = document.querySelectorAll('.blog-filter button');
+            const blogCards = document.querySelectorAll('.blog-card');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const type = button.dataset.type;
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    blogCards.forEach(card => {
+                        card.style.display = (type === 'all' || card.dataset.type === type) ? 'block' : 'none';
+                    });
+                });
+            });
+
+            const searchInput = document.getElementById('blog-search');
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase();
+                blogCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const desc = card.querySelector('p').textContent.toLowerCase();
+                    const tags = Array.from(card.querySelectorAll('.tag')).map(tag => tag.textContent.toLowerCase());
+                    const matches = title.includes(query) || desc.includes(query) || tags.some(tag => tag.includes(query));
+                    card.style.display = matches ? 'block' : 'none';
+                });
+            });
+  // Newsletter form submission
+            document.getElementById('newsletter-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const form = e.target;
+                const messageDiv = form.querySelector('.form-message');
+                const submitButton = form.querySelector('button');
+
+                submitButton.classList.add('loading');
+                submitButton.disabled = true;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form)
+                    });
+
+                    if (response.ok) {
+                        messageDiv.textContent = 'Thank you for subscribing!';
+                        messageDiv.classList.add('success');
+                        form.reset();
+                    } else {
+                        messageDiv.textContent = 'Subscription failed. Please try again.';
+                        messageDiv.classList.add('error');
+                    }
+                } catch (error) {
+                    console.error('Newsletter error:', error);
+                    messageDiv.textContent = 'An error occurred. Please try again.';
+                    messageDiv.classList.add('error');
+                } finally {
+                    submitButton.classList.remove('loading');
+                    submitButton.disabled = false;
+                    setTimeout(() => {
+                        messageDiv.textContent = '';
+                        messageDiv.classList.remove('success', 'error');
+                    }, 5000);
+                }
+            });
+
+            // Contact form submission
+            document.querySelector('.contact-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const form = e.target;
+                const messageDiv = form.querySelector('.form-message');
+                const submitButton = form.querySelector('button');
+
+                submitButton.classList.add('loading');
+                submitButton.disabled = true;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form)
+                    });
+
+                    if (response.ok) {
+                        messageDiv.textContent = 'Message sent successfully!';
+                        messageDiv.classList.add('success');
+                        form.reset();
+                    } else {
+                        messageDiv.textContent = 'Failed to send message. Please try again.';
+                        messageDiv.classList.add('error');
+                    }
+                } catch (error) {
+                    console.error('Contact form error:', error);
+                    messageDiv.textContent = 'An error occurred. Please try again.';
+                    messageDiv.classList.add('error');
+                } finally {
+                    submitButton.classList.remove('loading');
+                    submitButton.disabled = false;
+                    setTimeout(() => {
+                        messageDiv.textContent = '';
+                        messageDiv.classList.remove('success', 'error');
+                    }, 5000);
+                }
+            });
+
+            // Particle background (simplified)
+            const canvas = document.getElementById('particles');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particlesArray = [];
+            const numberOfParticles = 50;
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 5 + 1;
+                    this.speedX = Math.random() * 3 - 1.5;
+                    this.speedY = Math.random() * 3 - 1.5;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.size > 0.2) this.size -= 0.1;
+                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                }
+                draw() {
+                    ctx.fillStyle = 'rgba(212, 175, 55, 0.5)';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                for (let i = 0; i < numberOfParticles; i++) {
+                    particlesArray.push(new Particle());
+                }
+            }
+
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                    if (particlesArray[i].size <= 0.2) {
+                        particlesArray.splice(i, 1);
+                        i--;
+                        particlesArray.push(new Particle());
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+
+            initParticles();
+            animateParticles();
+
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+        });
+    </script>
+</body>
+</html>
